@@ -92,6 +92,12 @@ class SiteController extends Controller
         $oldpassword;
         if ($model->load(Yii::$app->request->post())) 
         {
+            if ($model->password !== $model->confirm_password){
+                yii::$app->session->setFlash('danger', 'Password do not match');
+                return $this->render('signup', [
+                    'model' => $model,
+                ]);
+            }
             $oldpassword = $model->password;
             $model->password = \Yii::$app->security->generatePasswordHash($model->password);
 
@@ -100,7 +106,6 @@ class SiteController extends Controller
             }
 
             $model->password = $oldpassword;
-            yii::$app->session->setFlash('danger', $model->confirm_password . ' - ' . $model->password);
             //\Yii::error("Unsuccessfull account creation". VarDumper::dumpAsString($model->errors).$model->confirm_password);
                 
         }
