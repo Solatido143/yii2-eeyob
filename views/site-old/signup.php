@@ -31,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
-            <?= $form->field($model, 'password')->passwordInput() ?>
+            <?= $form->field($model, 'new_password')->passwordInput() ?>
 
             <?= $form->field($model, 'confirm_password')->passwordInput() ?>
 

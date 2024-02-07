@@ -18,6 +18,7 @@ use yii\helpers\VarDumper;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     public $confirm_password;
+    public $new_password;
 
     /**
      * {@inheritdoc}
@@ -33,11 +34,16 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'confirm_password'], 'required'],
-            [['username', 'password', 'authKey', 'accessToken'], 'string', 'max' => 255],
+            [['username', 'password', 'confirm_password', 'new_password'], 'required'],
+            [['username', 'password', 'authKey', 'accessToken', 'new_password'], 'string', 'max' => 255],
+            ['confirm_password', 'compare', 'compareAttribute' => 'new_password', 'message' => 'Passwords do not match.'],
         ];
     }
 
+//    public function passwordValidation($password)
+//    {
+//        return Yii::$app->security->passwordValidation($password, $this->new_password);
+//    }
 
     /**
      * {@inheritdoc}
@@ -111,6 +117,6 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return $this->password === $password;
+        return Yii::$app->security->validatePassword($password, $this->password);
     }
 }

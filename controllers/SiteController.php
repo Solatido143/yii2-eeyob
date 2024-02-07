@@ -89,24 +89,21 @@ class SiteController extends Controller
     public function actionSignup()
     {
         $model = new \app\models\User();
-        $oldpassword;
         if ($model->load(Yii::$app->request->post())) 
         {
-            if ($model->password !== $model->confirm_password){
-                yii::$app->session->setFlash('danger', 'Password do not match');
-                return $this->render('signup', [
-                    'model' => $model,
-                ]);
-            }
-            $oldpassword = $model->password;
-            $model->password = \Yii::$app->security->generatePasswordHash($model->password);
+//            if ($model->password !== $model->confirm_password){
+//                yii::$app->session->setFlash('danger', 'Password do not match');
+//                return $this->render('signup', [
+//                    'model' => $model,
+//                ]);
+//            }
+            $model->password = \Yii::$app->security->generatePasswordHash($model->new_password);
 
             if ($model->save()){
                 return $this->redirect(Yii::$app->homeUrl);
             }
 
-            $model->password = $oldpassword;
-            //\Yii::error("Unsuccessfull account creation". VarDumper::dumpAsString($model->errors).$model->confirm_password);
+//            \Yii::error("Unsuccessfull account creation". VarDumper::dumpAsString($model->errors).$model->confirm_password);
                 
         }
 
