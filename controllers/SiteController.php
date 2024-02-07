@@ -9,7 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
-use app\models\User;
+use yii\helpers\VarDumper;
 
 class SiteController extends Controller
 {
@@ -88,11 +88,23 @@ class SiteController extends Controller
     }
     public function actionSignup()
     {
-        $model = new User();
+        $model = new \app\models\User();
+        $oldpassword;
+        if ($model->load(Yii::$app->request->post())) 
+        {
+            $oldpassword = $model->password;
+            $model->password = \Yii::$app->security->generatePasswordHash($model->password);
 
-        if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            return $this->redirect(\Yii::$app->homeUrl);
+            if ($model->save()){
+                return $this->redirect(Yii::$app->homeUrl);
+            }
+
+            $model->password = $oldpassword;
+            yii::$app->session->setFlash('danger', $model->confirm_password . ' - ' . $model->password);
+            //\Yii::error("Unsuccessfull account creation". VarDumper::dumpAsString($model->errors).$model->confirm_password);
+                
         }
+
         return $this->render('signup', [
             'model' => $model,
         ]);

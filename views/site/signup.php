@@ -26,13 +26,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'inputOptions' => ['class' => 'col-lg-3 form-control'],
                     'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
                 ],
-            ]); ?>
+            ]); 
+            echo $form->errorSummary($model)?>
 
             <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
 
             <?= $form->field($model, 'password')->passwordInput() ?>
 
-            <?= $form->field($model, 'confirm_password')->passwordInput()->label('Confirm Password') ?>
+            <?= $form->field($model, 'confirm_password')->passwordInput() ?>
 
             <div class="form-group">
                 <div>

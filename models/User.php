@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\web\IdentityInterface;
+use yii\helpers\VarDumper;
 
 /**
  * This is the model class for table "user".
@@ -17,6 +18,7 @@ use yii\web\IdentityInterface;
 class User extends \yii\db\ActiveRecord implements IdentityInterface
 {
     public $confirm_password;
+
     /**
      * {@inheritdoc}
      */
@@ -31,26 +33,12 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     public function rules()
     {
         return [
-            [['username', 'password', 'authKey', 'accessToken'], 'required'],
+            [['username', 'password', 'confirm_password'], 'required'],
             [['username', 'password', 'authKey', 'accessToken'], 'string', 'max' => 255],
-            ['password', 'string', 'min' => 8],
-            [['confirm_password'], 'compare', 'compareAttribute' => 'password', 'message' => 'Passwords do not match'],
+            ['password', 'compare', 'compareAttribute' => 'confirm_password', 'message' => 'Passwords do not match.' . $this->confirm_password . '.'],
         ];
     }
-    public function signup()
-    {
-        $user = new User();
-        $user->username = $this->username;
-        $user->password = \Yii::$app->security->generatePasswordHash($this->password);
-        $user->accessToken = \Yii::$app->security->generateRandomString();
-        $user->authKey = \Yii::$app->security->generateRandomString();
 
-        if ($user->save()){
-            return true;
-        }
-
-        \Yii::error("Uncessfull account creation". VarDumper::dumpAsString($user->errors));
-    }
 
     /**
      * {@inheritdoc}
