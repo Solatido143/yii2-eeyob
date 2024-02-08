@@ -1,0 +1,73 @@
+.column {
+    margin-left: 20px;
+    padding-right: 20px;
+    float: left;
+    width: 90%;
+}
+
+.column2 {
+    margin-left: 20px;
+    float: left;
+    width: 40%;
+}
+
+.column3 {
+    margin-left: 20px;
+    float: left;
+    width: 25%;
+}
+
+.column4 {
+    margin-left: 20px;
+    float: left;
+    width: 15%;
+}
+
+.columnLabel {
+    margin-left: 20px;
+    float: left;
+    width: 10%;
+    vertical-align: center;
+    font-weight: bolder;
+}
+
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+    width: 95%;
+}
+
+.column.form-container {
+    border: solid 1px lightgray;
+    width: 90%
+}
+
+.column2.form-container {
+    border: solid 1px lightgray;
+    width: 45%
+}
+
+.form-container .column3.in-container {
+    padding-top: 15px;
+    width: 27%
+}
+
+.form-container .column2.in-container {
+    padding-top: 15px;
+    width: 45%
+}
+
+hr {
+    height: 3px;
+}
+
+form div.row div div.required label:before {
+    content: "* ";
+    color:red;
+}
+
+h5 {
+    font-weight:bold;
+}
