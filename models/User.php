@@ -35,7 +35,7 @@ class User extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return [
             [['username', 'password', 'confirm_password', 'new_password'], 'required'],
-            [['username', 'password', 'authKey', 'accessToken', 'new_password'], 'string', 'max' => 255],
+            [['username', 'password', 'authKey', 'accessToken', 'new_password', '$confirm_password'], 'string', 'max' => 255],
             ['confirm_password', 'compare', 'compareAttribute' => 'new_password', 'message' => 'Passwords do not match.'],
         ];
     }
